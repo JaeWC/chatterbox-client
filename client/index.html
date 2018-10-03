@@ -4,17 +4,40 @@
     <meta charset="utf-8">
     <title>chatterbox</title>
     <link rel="stylesheet" href="styles/styles.css">
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
     <!-- dependencies -->
     <script src="../node_modules/jquery/dist/jquery.js"></script>
   </head>
-  <body>
+  <body class="container">
     <div id="main">
       <h1>chatterbox</h1>
       <!-- Your HTML goes here! -->
     </div>
-    <div id="chats"></div>
-    <!-- your scripts -->
+    
+    <div id="page-wrapper">
+      <div id="sidebar-wrapper">
+        <button id="create-room" class="submit button">Create Room</button>
+        <div id="roomSelect">
+          <li><button id="lobby"> Lobby </button></li>
+        </div>
+      </div>
+      <div id="send">
+        <input id="user" type="text" placeholder="Enter username">
+        <input id="room" type="text" placeholder="Enter room here">
+        <input id="message" type="text" placeholder="Enter message here">
+        <button id="send-message" class="submit btn btn-info button" type="button">Send message</div>
+      </div>
+      <div id="chats"></div>
+      <!-- your scripts -->
+      <select id="roomChoose">
+        <option class="uppercase">Select Room</option>
+        <option>Lobby</option>
+      </select>
+    </div>
+
     <script src="scripts/app.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
   </body>
 </html>
+
