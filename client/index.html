@@ -10,31 +10,28 @@
     <script src="../node_modules/jquery/dist/jquery.js"></script>
   </head>
   <body class="container">
-    <div id="main">
-      <h1>chatterbox</h1>
-      <!-- Your HTML goes here! -->
-    </div>
-    
-    <div id="page-wrapper">
-      <div id="sidebar-wrapper">
-        <button id="create-room" class="submit button">Create Room</button>
-        <div id="roomSelect">
-          <li><button id="lobby"> Lobby </button></li>
+      <aside id="sidebar">
+        <h1>chatterbox</h1>
+        <div id="send">
+          <input id="user" type="text" placeholder="Enter username">
+          <input id="room" type="text" placeholder="Enter room here">
+          <textarea id="message" type="text" placeholder="Enter message here"></textarea>
+          <div id="send-message" class="submit button">Send message</div>
         </div>
-      </div>
-      <div id="send">
-        <input id="user" type="text" placeholder="Enter username">
-        <input id="room" type="text" placeholder="Enter room here">
-        <input id="message" type="text" placeholder="Enter message here">
-        <button id="send-message" class="submit btn btn-info button" type="button">Send message</div>
-      </div>
-      <div id="chats"></div>
-      <!-- your scripts -->
-      <select id="roomChoose">
-        <option class="uppercase">Select Room</option>
-        <option>Lobby</option>
-      </select>
-    </div>
+        <p id="status"></p>
+  
+        <!-- Room Select -->
+        <h3 class="sidebar-title">rooms</h3>
+        <select id="roomSelect">
+          <option class="uppercase">Select Room</option>
+          <option>Global</option>
+        </select>
+      </aside>
+  
+      <section id="main">
+        <!-- Your HTML goes here! -->
+        <div id="chats"></div>
+      </section>
 
     <script src="scripts/app.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>

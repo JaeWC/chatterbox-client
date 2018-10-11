@@ -1,142 +1,257 @@
 body {
     background: #eee;
-    text-align: center;
-    padding: 0 25px;
-    font-family: arial, sans-serif;
+    color: #222;
+    font-family: "Lato", Helvetica, Arial, sans-serif;
+    font-weight: 400;
 }
 
-#main, #chats {
-    width: 500px;
-    margin: auto;
-    text-align: left;
-    background: white;
-    padding: 50px 60px;
-    border: solid #ddd;
-    border-width: 0 1px 1px 1px;
+a {
+  text-decoration: none;
+  cursor: pointer;
 }
 
-#page-wrapper {
-    padding-left: 150px;
-  }
-  
-  #sidebar-wrapper {
-    position: fixed;
-    width: 250px;
-    height: 100%;
-    margin-left: -250px;
-    background: transparent;
-    overflow-x: hidden;
-    overflow-y: auto;
-  }
-  
-  #page-content-wrapper {
-    width: 100%;
-    padding: 20px;
-  }
-  /* 사이드바 스타일 */
-  
-  .sidebar-nav {
-    width: 250px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-  
-  .sidebar-nav li {
-    text-indent: 1.5em;
-    line-height: 2.8em;
-  }
-  
-  .sidebar-nav li button {
-    display: block;
-    text-decoration: none;
-    color: #999;
-  }
-  
-  .sidebar-nav li button:hover {
-    color: #fff;
-    background: rgba(255, 255, 255, 0.2);
-  }
-  
-  .sidebar-nav > .sidebar-brand {
-    font-size: 1.3em;
-    line-height: 3em;
-  }
-
-#main h1 {
-    margin-top: 0;
-    font-size: 35px;
-    margin-bottom: 5px;
-    padding: 5px;
+a:hover {
+  opacity: 0.8;
 }
 
-#main h1 span {
-    font-style:italic;
+.text-right {
+  text-align: right;
 }
 
-#main ul {
-    padding-left: 20px;
+h1 {
+  color: #fff;
+  font-size: 2em;
 }
 
-#main .error {
-    border: 1px solid red;
-    background: #FDEFF0;
-    padding: 20px;
+#main {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 248px;
 }
 
-#main .success {
-    margin-top: 25px;
+#status {
+  font-size: 0.7em;
 }
 
-#main .success code {
-    font-size: 12px;
-    color: green;
-    line-height: 13px;
+.success {
+  color: #7DE5DD;
 }
 
-#send {
-    text-align: center;
+.failure {
+  color: red;
 }
 
-form {
-    padding: 20px;
-    padding-left: 0;
-    margin-bottom: 20px;
+/***************
+Input Fields
+****************/
+input, textarea {
+  display: block;
+  margin: 0.5em 0;
+  padding: 0.5em;
+  width: 200px;
+  font-size: 0.8em;
+  font-family: "Lato", Helvetica, Arial, sans-serif;
+  border: 1px solid #fff9e6;
+  border-radius: 2px;
 }
 
-form input[type=text] {
-    margin-right: 10px;
-    width: 70%;
-    font-size: 12px;
-    padding: 5px;
+.button {
+  padding: 0.5em;
+  width: 202px;
+  background: #7DE5DD;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-size: 0.8em;
+  color: #fff;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 2px;
+  box-shadow: 1px 1px 2px #5a5a5a;
 }
 
-.chat {
-    padding: 5px;
-    margin-bottom: 5px;
-    background-color: #eee;
+.button:hover {
+  opacity: 0.8;
 }
 
-.chat .username {
-    font-weight: 800;
+/***************
+Message Styling
+****************/
+.message {
+  padding: 0.5em 1em;
 }
 
-.chat:hover {
-    background-color: #ddd;
+.message:nth-child(odd) {
+  background: #fff9e6;
+  background: rgba(255, 249, 232, 0.5);
 }
 
-.spinner {
-    float: right;
-    height: 46px;
-    margin-bottom: 5px;
+.username {
+  font-size: 0.8em;
+  padding: 0.2em 0.5em;
+  color: #fff;
+  background: #6A5A7E;
+  text-shadow: -1px -1px 1px #6f6f6f;
+  border-radius: 6px;
 }
 
-.spinner img {
-    padding: 10px;
+.roomname {
+  font-size: 0.7em;
+  color: #6A5A7E;
+}
+
+.text {
+  font-size: 1.5em;
+  font-weight: 300;
+  margin: 0.5em 0;
 }
 
 .friend {
-    color: #fff;
-    background-color: #0090da;
+  background: #7DE5DD;
+  text-shadow: none;
 }
 
+/***************
+ Sidebar
+****************/
+#sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  padding: 1em;
+  width: 216px;
+  color: #fff;
+  background: #444;
+  background: rgba(4, 4, 4, 0.5);
+  z-index: 100;
+  box-shadow: 1px 0 2px #222;
+}
+
+.sidebar-title {
+  margin: 2em 0 0.5em 0;
+}
+
+#friends {
+  list-style: none;
+  margin: 0 0 0 -42px;
+}
+
+.friends-list-item {
+  display: block;
+  padding: 0.5em 0;
+  border-width: 1px 0 0 0;
+  border-color: #7e7e7e;
+  border-style: solid;
+}
+
+#roomSelect {
+  font-family: "Lato", Helvetica, Arial, sans-serif;
+  font-size: 0.8em;
+  letter-spacing: 0.05em;
+  border: 1px solid #7e7e7e;
+  color: #7de5dd;
+  background: transparent;
+  width: 216px;
+  text-transform: uppercase;
+}
+
+/***************
+ Layout
+****************/
+.row {
+  *zoom: 1;
+}
+.row:before,
+.row:after {
+  display: table;
+  content: "";
+  line-height: 0;
+}
+.row:after {
+  clear: both;
+}
+[class*="col"] {
+  float: left;
+  min-height: 1px;
+  margin-left: 2.75%;
+}
+[class*="col"]:first-child {
+  margin-left: 0;
+}
+[class*="col"].right {
+  float: right;
+}
+.row.centered {
+  text-align: center;
+}
+.row.centered [class*="col"], [class*="col"].center {
+  float: none;
+  display: inline-block;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.col1 {width: 5.8125%;}
+.col2 {width: 14.375%;}
+.col3 {width: 22.9375%;}
+.col4 {width: 31.5%;}
+.col5 {width: 40.0625%;}
+.col6 {width: 48.625%;}
+.col7 {width: 57.1875%;}
+.col8 {width: 65.75%;}
+.col9 {width: 74.3125%;}
+.col10 {width: 82.875%;}
+.col11 {width: 91.4375%;}
+.col12 {width: 100%;}
+
+/***************
+ Mobile Responsive Styles
+****************/
+@media (max-width: 550px) {
+  body {
+    margin: 0;
+  }
+
+  #sidebar {
+    position: relative;
+    width: 250px;
+    display: block;
+    margin: 0 auto;
+    height: 300px;
+    padding: 0px;
+    top: 10px;
+    border-radius: 4px;
+  }
+
+  #sidebar h1 {
+    margin-top: 0px;
+    padding-top: 5px;
+    text-align: center;
+  }
+
+  #main {
+    left: 0;
+    top: 325px;
+  }
+
+  div#send {
+    width: 215px;
+    margin: 0 auto;
+    color: black;
+  }
+
+  p#status {
+    text-align: center;
+  }
+
+  #roomSelect {
+    display: block;
+    margin: 0 auto;
+  }
+
+  input {
+  }
+}

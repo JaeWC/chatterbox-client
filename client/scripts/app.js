@@ -1,5 +1,5 @@
 var app = {
-  server: 'http://52.78.213.9:3000/messages',
+  server: 'http://127.0.0.1:3000/classes/messages',
   currentRoom: undefined,
   rooms: {},
 
@@ -21,55 +21,61 @@ var app = {
       elem.preventDefault();
       context.send();
     });
+    $(document).on('click', '.roomname', filterRoom);
+    $(document).on('change', '#roomSelect', filterRoom);
+  },
 
-    $(document).on('click', '#roomSelect', filterRoom);
-
-    $('#create-room').on('click', function(elem) {
-      var newRoom = prompt('Enter new Room : ');
-      $newRoomBtn = $('<li><button id=' + newRoom + '>' + newRoom + '</button></li>');
-      $('#roomSelect').append($newRoomBtn);
-    });
+  cleanData: function(unsafe) {
+    unsafe = unsafe || 'NA';
+    return encodeURIComponent(unsafe);
   },
 
   fetch: function() {
     var context = this;
 
+    // var where = {}
+
+    // extend where defaults
+    // if (context.currentRoom !== undefined) {
+    //   _.extend(where, {roomname: context.currentRoom});
+    // }
     $.ajax({
-      url: 'http://52.78.213.9:3000/messages',
+      url: context.server,
       type: 'GET',
       data: JSON.stringify(message),
-      contentType: 'application/json',
-      success: function (messages) {
-        console.log('chatterbox: Message sent');
-
-        context.renderMessage(messages);
-        context.renderRoom(messages);
+      success: function(data) {
+        context.renderRoom(data);
+        context.renderMessage(data);
       },
-      error: function (data) {
-        console.error('chatterbox: Failed to send message', data);
+      error: function() {
+        console.log('chatterbox: Failed to get message');
       }
     });
   },
 
   send: function(message) {
+    var context = this;
+    console.log("Sent!");
+
     var defaults = {
       username: $('#user').val(),
       text: $('#message').val(),
       roomname: $('#room').val()
     };
+
+    console.log(typeof message);
     var message = message || defaults;
-    console.log(message);
 
     $.ajax({
-      url: 'http://52.78.213.9:3000/messages',
+      url: context.server,
       type: 'POST',
       data: JSON.stringify(message),
-      contentType: 'application/json',
-      success: function (data) {
-        console.log('chatterbox: Message sent');
+      dataType: 'application/json',
+      success: function() {
+        $('#status').text('Your message was successfully sent!').addClass('success');
       },
-      error: function (data) {
-        console.error('chatterbox: Failed to send message', data);
+      error: function() {
+        $('#status').text('Your message failed :(').addClass('failure');
       }
     });
   },
@@ -79,33 +85,37 @@ var app = {
     $chats.children().remove();
   },
 
-  renderMessage: function (message) {
-    $('#chats').html('');
-    var $chatlsit = $('<div id="chatlist"></div>');
-    $('#chats').append($chatlsit);
+  renderMessage: function (messages) {
+    var context = this;
+    $('#chats').children().remove();
+    var $messageList = $('#chats');
+
+    for (var i = 0; i < messages.length; i++) {
+      var message = messages[i];
+      var username = this.cleanData(message.username);
+      var text = this.cleanData(message.text);
+      var roomname = this.cleanData(message.roomname);
 
 
-    for (var i = 0; i < message.length; i++) {
-   
-      var content = message[i];
-
-      var username = content.username.replace(/<\/?[^>]+(>|$)/g, '');
-      var text = content.text.replace(/<\/?[^>]+(>|$)/g, '');
-      var roomname = content.roomname.replace(/<\/?[^>]+(>|$)/g, '');
-      var date = content.date;
-
-
-      if (!username.includes('<alert>') || !text.includes('<alert>') || !roomname.includes('<alert>')) {
-        var $messageDiv = $('<div class="jumbotron" "row"><div class="user" "col6"><strong>' + username + '</strong></div><div class="text" "col6">' + text + '</div><div class="room">' + roomname + '</div><div>' + date + '</div></div>');
-        $('#chats').prepend($messageDiv);
-      }
-
+      var messageDiv =
+        '<div class="message">' +
+          '<div class="row">' +
+            '<div class="col6">' +
+              '<a class="username">' + username + '</a>' +
+            '</div>' +
+            '<div class="col6 text-right">' +
+              '<a class="roomname">' + roomname + '</a>' +
+            '</div>' +
+          '</div>' +
+          '<p class="text">' + text + '</p>' +
+        '</div>';
+      $messageList.prepend(messageDiv);
     }
   },
 
-  addRoom: function() {
+  addRoom: function(roomName) {
     var $roomSelect = $('#roomSelect');
-    $roomSelect.append('<li><button id=' + roomname + ' class="roomname">' + roomname + '</button></li>');
+    $roomSelect.append('<option>' + roomName + '</option>');
   },
 
   filterRoom: function(roomName) {
@@ -115,17 +125,14 @@ var app = {
   },
 
   renderRoom: function (message) {
-    $('#roomSelect').children().remove();
-
-    var temp = [];
+    var $options = $('#roomSelect');
     for (var i = 0; i < message.length; i++) {
-      var content = message[i];
-      var roomname = content.roomname;
+      var room = this.cleanData(message[i].roomname);
 
-      if (!temp.includes(roomname)) {
-        var $roombtn = $('<li><button id=' + roomname + ' class="roomname">' + roomname + '</button></li>');
-        $('#roomSelect').append($roombtn);
-        temp.push(roomname);
+      if (!(room in this.rooms)) {
+        var option = '<option>' + room + '</option>';
+        $options.append(option);
+        this.rooms[room] = true;
       }
     }
   }
@@ -134,4 +141,3 @@ var app = {
 $(document).ready(function() {
   app.init();
 });
-
